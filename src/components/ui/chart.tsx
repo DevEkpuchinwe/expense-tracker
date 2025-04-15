@@ -52,13 +52,13 @@ const ChartContainer = React.forwardRef<
         data-chart={chartId}
         ref={ref}
         className={cn(
-          "flex aspect-video justify-center text-xs [&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
+          "flex aspect-square justify-center text-xs [&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_[stroke='#ccc']]:stroke-border [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
           className
         )}
         {...props}
       >
         <ChartStyle id={chartId} config={config} />
-        <RechartsPrimitive.ResponsiveContainer>
+        <RechartsPrimitive.ResponsiveContainer width="100%" height="100%">
           {children}
         </RechartsPrimitive.ResponsiveContainer>
       </div>
@@ -355,6 +355,27 @@ function getPayloadConfigFromPayload(
     : config[key as keyof typeof config]
 }
 
+const PieChart = ({ data, dataKey, nameKey, fill, label }: { data: any[], dataKey: string, nameKey: string, fill: string, label: string }) => {
+  return (
+    <ChartContainer config={{}}>
+      <RechartsPrimitive.PieChart>
+        <RechartsPrimitive.Pie
+          data={data}
+          dataKey={dataKey}
+          nameKey={nameKey}
+          cx="50%"
+          cy="50%"
+          outerRadius={80}
+          fill={fill}
+          label
+        />
+        <RechartsPrimitive.Tooltip />
+        <RechartsPrimitive.Legend />
+      </RechartsPrimitive.PieChart>
+    </ChartContainer>
+  );
+};
+
 export {
   ChartContainer,
   ChartTooltip,
@@ -362,4 +383,5 @@ export {
   ChartLegend,
   ChartLegendContent,
   ChartStyle,
+  PieChart
 }
